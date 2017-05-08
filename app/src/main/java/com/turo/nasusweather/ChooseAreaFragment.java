@@ -2,6 +2,7 @@ package com.turo.nasusweather;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,9 @@ public class ChooseAreaFragment extends Fragment {
 
     private ArrayAdapter<String> adapter;
 
+    /**
+     * List集合用于临时装载从数据库获得的省市县数据
+     */
     private List<String> dataList = new ArrayList<>();
 
     /**
@@ -83,17 +87,28 @@ public class ChooseAreaFragment extends Fragment {
      */
     private int currentLevel;
 
+    /**
+     * 获取控件实例，初始化ArrayAdapter，并把它设置成ListView的适配器
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_area,container,false);
         titleText = (TextView) view.findViewById(R.id.title_text);
         backButton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
-        adapter = new ArrayAdapter<>(MyApplication.getContext(),android.R.layout.simple_list_item_1,dataList);
+        adapter = new ArrayAdapter<>(InitApplication.getContext(),android.R.layout.simple_list_item_1,dataList);
         listView.setAdapter(adapter);
         return view;
     }
 
+    /**
+     * 给Listview和Button设置点击事件
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -106,6 +121,12 @@ public class ChooseAreaFragment extends Fragment {
                 }else if (currentLevel == LEVEL_CITY){
                     selectedCity = cityList.get(position);
                     queryCounties();
+                }else if (currentLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -122,6 +143,9 @@ public class ChooseAreaFragment extends Fragment {
         queryProvinces();
     }
 
+    /**
+     * 查询全国所有的省，优先从数据库查询，如果没有查询到再去服务器查询
+     */
     private void queryProvinces() {
         titleText.setText("中国");
         backButton.setVisibility(View.GONE);
@@ -140,6 +164,9 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
 
+    /**
+     * 查询选中省内所有的市，优先从数据库查询，如果没有查询到再去服务器查询
+     */
     private void queryCities() {
         titleText.setText(selectedProvince.getProvinceName());
         backButton.setVisibility(View.VISIBLE);
@@ -149,7 +176,7 @@ public class ChooseAreaFragment extends Fragment {
             for (City city : cityList) {
                 dataList.add(city.getCityName());
             }
-            adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();//刷新adapter
             listView.setSelection(0);
             currentLevel = LEVEL_CITY;
         }else {
@@ -159,6 +186,9 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
 
+    /**
+     * 查询选中市内所有的县，优先从数据库查询，如果没有查询到再去服务器查询
+     */
     private void queryCounties() {
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
@@ -179,6 +209,11 @@ public class ChooseAreaFragment extends Fragment {
         }
     }
 
+    /**
+     * 根据传入的地址和类型从服务器查询省市县数据
+     * @param address
+     * @param type
+     */
     private void queryFromServer(String address, final String type) {
         showProgressDialog();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
@@ -217,7 +252,7 @@ public class ChooseAreaFragment extends Fragment {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                            Toast.makeText(MyApplication.getContext(),"加载失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InitApplication.getContext(),"加载失败",Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -225,12 +260,18 @@ public class ChooseAreaFragment extends Fragment {
         });
     }
 
+    /**
+     * 关闭进度对话
+     */
     private void closeProgressDialog() {
         if (progressDialog != null){
             progressDialog.dismiss();
         }
     }
 
+    /**
+     * 显示进度对话
+     */
     private void showProgressDialog() {
         if (progressDialog == null){
             progressDialog = new ProgressDialog(getActivity());

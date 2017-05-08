@@ -5,16 +5,16 @@ import org.litepal.crud.DataSupport;
 /**
  * Created by YQ950209 on 2017/2/14.
  */
-
+//市列表用于存放某省下属各市
 public class City extends DataSupport {
 
     private int id;
 
-    private String cityName;
+    private String cityName;//市名称
 
-    private int cityCode;
+    private int cityCode;//市代号
 
-    private int provinceId;
+    private int provinceId;//当前市所属省的id值
 
     public int getId() {
         return id;

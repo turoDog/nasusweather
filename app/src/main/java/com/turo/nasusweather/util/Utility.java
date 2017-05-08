@@ -2,9 +2,11 @@ package com.turo.nasusweather.util;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.turo.nasusweather.db.City;
 import com.turo.nasusweather.db.County;
 import com.turo.nasusweather.db.Province;
+import com.turo.nasusweather.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +15,7 @@ import org.json.JSONObject;
 /**
  * Created by YQ950209 on 2017/2/14.
  */
-
+//解析和处理数据工具类
 public class Utility {
 
     /**
@@ -86,5 +88,22 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    /**
+     * 将返回的JSON数据解析成Weather实体类
+     * @param response
+     * @return
+     */
+    public static Weather handleWeatherResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent,Weather.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
