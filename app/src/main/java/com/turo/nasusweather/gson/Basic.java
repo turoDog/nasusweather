@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by chenzhiyuan on 2017/5/8.
  * 由于JSON中的一些字段不太适合直接作为java字段来命名，
  * 因此使用@SerializeName注解的方式来让JSON字段和Java字段之间建立映射关系。
+ * 其中city表示城市名，id表示城市对应的天气id，update中的loc表示天气更新时间
  */
 
 public class Basic {

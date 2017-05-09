@@ -13,7 +13,7 @@ public class Suggestion {
     public Comfort comfort;//舒适度指数
 
     @SerializedName("cw")
-    public CarWash carWash;//洗东西指数
+    public CarWash carWash;//洗车指数
 
     public Sport sport;//运动指数
 

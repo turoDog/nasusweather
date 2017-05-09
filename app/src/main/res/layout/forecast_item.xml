@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="15dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <!--未来天气信息的子项布局-->
 
@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
+        android:gravity="center"
         android:textColor="#fff"/>
 
     <!--最高温度-->
@@ -43,9 +44,9 @@
         android:id="@+id/min_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="right"
-        android:textColor="#fff"/>
+        android:textColor="#fff" />
 
 </LinearLayout>
