@@ -100,7 +100,8 @@ public class ChooseAreaFragment extends Fragment {
         titleText = (TextView) view.findViewById(R.id.title_text);
         backButton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
-        adapter = new ArrayAdapter<>(InitApplication.getContext(),android.R.layout.simple_list_item_1,dataList);
+        adapter = new ArrayAdapter<>(InitApplication.getContext(),
+                R.layout.item_choose_area,dataList);
         listView.setAdapter(adapter);
         return view;
     }
@@ -123,10 +124,17 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if (currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof  WeatherActivity){
+                        WeatherActivity weatherActivity = (WeatherActivity) getActivity();
+                        weatherActivity.drawerLayout.closeDrawers();//关闭滑动菜单
+                        weatherActivity.swipeRefresh.setRefreshing(true);//显示下拉刷新进度条
+                        weatherActivity.requestWeather(weatherId);//重新根据weatherId请求天气信息
+                    }
                 }
             }
         });
