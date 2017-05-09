@@ -1,1 +1,2 @@
 nasusweather
+项目结构:db包用于存放数据模型层相关代码，gson包用于存放GSON模型相关代码，service包用于存放服务相关代码，util包用于存放工具相关代码。
