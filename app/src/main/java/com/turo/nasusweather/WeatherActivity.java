@@ -104,10 +104,13 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                requestWeather(weatherId);
+                requestWeather(weatherId);//下拉刷新回调方法，再次请求天气信息
             }
         });
 
+        /**
+         * 加载必应每日一图
+         */
         String bingPic = prefs.getString("bing_pic",null);
         if (bingPic != null){
             Glide.with(this).load(bingPic).into(bingPicImg);
