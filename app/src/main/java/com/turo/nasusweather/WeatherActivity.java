@@ -44,13 +44,41 @@ public class WeatherActivity extends AppCompatActivity {
 
     private TextView weatherInfoText;
 
+    private TextView windDirectionText;
+
+    private TextView windPowerText;
+
+    private TextView humidityText;
+
+    private TextView feelDegreeText;
+
+    private TextView windSpeedText;
+
     private LinearLayout forecastLayout;
 
     private TextView aqiText;
 
     private TextView pm25Text;
 
+    private TextView pm10Text;
+
+    private TextView qualityText;
+
+    private TextView coText;
+
+    private TextView no2Text;
+
+    private TextView so2Text;
+
     private TextView comfortText;
+
+    private TextView derssText;
+
+    private TextView coldText;
+
+    private TextView uraysText;
+
+    private TextView travelText;
 
     private TextView carWashText;
 
@@ -212,10 +240,20 @@ public class WeatherActivity extends AppCompatActivity {
         String updateTime = weather.basic.update.updateTime.split(" ")[1];
         String degree = weather.now.temperature + "℃";
         String weatherInfo = weather.now.more.info;
+        String windDirection = weather.now.wind.direction;
+        String windPower = weather.now.wind.power + "级";
+        String humidity = weather.now.humidity + "%";
+        String feelTemprature = weather.now.feeling_temperature + "℃";
+        String windSpeed = weather.now.wind.speed + "km/h";
         titleCity.setText(cityName);
         titleUpdateTime.setText(updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
+        windDirectionText.setText(windDirection);
+        windPowerText.setText(windPower);
+        humidityText.setText(humidity);
+        feelDegreeText.setText(feelTemprature);
+        windSpeedText.setText(windSpeed);
         forecastLayout.removeAllViews();
         for (Forecast forecast : weather.forecastList){
             View view = LayoutInflater.from(this).inflate(R.layout.forecast_item,
@@ -233,11 +271,24 @@ public class WeatherActivity extends AppCompatActivity {
         if (weather.aqi != null){
             aqiText.setText(weather.aqi.city.aqi);
             pm25Text.setText(weather.aqi.city.pm25);
+            pm10Text.setText(weather.aqi.city.pm10);
+            qualityText.setText(weather.aqi.city.qlty);
+            coText.setText(weather.aqi.city.co != null ? weather.aqi.city.co : "0");
+            no2Text.setText(weather.aqi.city.no2 != null ? weather.aqi.city.no2 : "0");
+            so2Text.setText(weather.aqi.city.so2 != null ? weather.aqi.city.so2 : "0");
         }
         String comfort = "舒适度：" + weather.suggestion.comfort.info;
+        String dress = "穿衣指数："+ weather.suggestion.dress.info;
+        String cold = "感冒指数："+ weather.suggestion.cold.info;
+        String urays = "紫外线指数："+ weather.suggestion.uRays.info;
+        String travel = "旅游指数："+ weather.suggestion.travel.info;
         String carWash = "洗车指数："+ weather.suggestion.carWash.info;
-        String sport = "运动建议："+weather.suggestion.sport.info;
+        String sport = "运动建议："+ weather.suggestion.sport.info;
         comfortText.setText(comfort);
+        derssText.setText(dress);
+        coldText.setText(cold);
+        uraysText.setText(urays);
+        travelText.setText(travel);
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
@@ -249,10 +300,24 @@ public class WeatherActivity extends AppCompatActivity {
         titleUpdateTime = (TextView) findViewById(R.id.title_update_time);
         degreeText = (TextView) findViewById(R.id.degree_text);
         weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
+        windDirectionText = (TextView) findViewById(R.id.wind_dir);
+        windPowerText = (TextView) findViewById(R.id.wind_pow);
+        humidityText = (TextView) findViewById(R.id.tv_humidity);
+        feelDegreeText = (TextView) findViewById(R.id.tv_feel_tmp);
+        windSpeedText = (TextView) findViewById(R.id.tv_wind_speed);
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
         aqiText = (TextView) findViewById(R.id.aqi_text);
         pm25Text = (TextView) findViewById(R.id.pm25_text);
+        pm10Text = (TextView) findViewById(R.id.pm10_text);
+        qualityText = (TextView) findViewById(R.id.qulity_text);
+        coText = (TextView) findViewById(R.id.co_text);
+        no2Text = (TextView) findViewById(R.id.no2_text);
+        so2Text = (TextView) findViewById(R.id.so2_text);
         comfortText = (TextView) findViewById(R.id.comfort_text);
+        derssText = (TextView) findViewById(R.id.dress_text);
+        coldText = (TextView) findViewById(R.id.cold_text);
+        uraysText = (TextView) findViewById(R.id.urays_text);
+        travelText = (TextView) findViewById(R.id.travel_text);
         carWashText = (TextView) findViewById(R.id.car_wash_text);
         sportText = (TextView) findViewById(R.id.sport_text);
         bingPicImg = (ImageView) findViewById(R.id.bing_pic_img);

@@ -12,6 +12,27 @@ public class Now {
     @SerializedName("tmp")
     public String temperature;
 
+    @SerializedName("fl")
+    public String feeling_temperature;
+
+    @SerializedName("hum")
+    public String humidity;
+
+    @SerializedName("wind")
+    public Wind wind;
+
+    public class Wind{
+
+        @SerializedName("dir")
+        public String direction;
+
+        @SerializedName("sc")
+        public String power;
+
+        @SerializedName("spd")
+        public String speed;
+    }
+
     @SerializedName("cond")
     public More more;
 

@@ -10,8 +10,18 @@ public class AQI {
 
     public class AQICity {
 
-        public String aqi;
+        public String qlty;//空气质量
 
-        public String pm25;
+        public String aqi;//AQI指数
+
+        public String pm25;//pm2.5指数
+
+        public String pm10;//pm10指数
+
+        public String co;//一氧化碳指数
+
+        public String no2;//二氧化氮指数
+
+        public String so2;//二氧化硫指数
     }
 }
